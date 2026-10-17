@@ -8,7 +8,7 @@ Skills de estudo com IA. Cada skill funciona sozinha; juntas, formam um ciclo op
 | -- | -- | -- |
 | `teacher-feedback` | Revisa o seu estudo como um professor: guia com perguntas em vez de dar a resposta e sempre cita a fonte | Disponível |
 | `note-standardizer-with-obsidian` | Converte o seu resumo em uma nota markdown para o Obsidian: seções definidas pelo conteúdo, nas suas palavras, com `[[links]]` e relações com outras notas | Disponível |
-| `learn-about` | Faz perguntas socráticas sobre um assunto e atualiza o seu nível por sub-tópico, com revisões espaçadas | Planejada |
+| `learn-about` | Faz perguntas socráticas sobre um assunto usando só as suas notas do Obsidian e registra o seu nível por seção, com revisões espaçadas | Disponível |
 
 As skills são independentes: não dependem umas das outras e cada uma pode ser usada isoladamente.
 
@@ -31,8 +31,9 @@ Uma forma de usá-las em sequência (sugestão, nada é obrigatório):
    * Saída: nota markdown com frontmatter (`title`, `tags`, `created`) e seções derivadas do que você escreveu, sem template fixo e sem seção vazia. Mantém as suas palavras e o seu tom, sem acrescentar fatos. Uma seção `Relações` liga só a notas que já existem no seu vault, sem sugestões; a nota antiga também ganha o link de volta (só uma linha em `Relações`). Não usa MCP: lê e grava direto na pasta do vault. Na primeira vez pergunta qual é o vault, em qual pasta gravar e se deve gravar sempre direto; as respostas ficam salvas. Nunca sobrescreve uma nota existente.
    * Preferências: o vault, a pasta e as regras suas (tags, seções) ficam em `~/.config/study-workflow-skills/note-standardizer.md`.
 3. **learn-about**
-   * Entrada: assunto + arquivo de contexto de domínio.
-   * Saída: perguntas socráticas, avaliação das respostas, contexto atualizado (nível por sub-tópico) e agenda de revisão espaçada.
+   * Entrada: o assunto, ex.: `learn-about docker`.
+   * Saída: perguntas socráticas e dicas graduadas (pergunta → opções → lacuna → resposta, só no fim). A única fonte são as notas do seu vault: sem web, sem conhecimento externo, e o que as notas não cobrem vira "suas notas não cobrem isso". As notas de estudo só são lidas. O progresso (nível 🔴🟡🟢 por seção `##`, dúvidas, lacunas e agenda de revisão de 1 dia, 3 dias, 1 semana e 2 semanas) fica em uma nota de diário por assunto dentro do vault, com a tag `learn-about`.
+   * Preferências: reaproveita o vault de `~/.config/study-workflow-skills/note-standardizer.md` e guarda ali a pasta do diário. Sem vault salvo, pergunta como o `note-standardizer-with-obsidian`.
 
 ## Instalação
 

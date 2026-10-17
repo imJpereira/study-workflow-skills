@@ -9,7 +9,7 @@
     {
       "name": "study-workflow-skills",
       "source": "./",
-      "description": "Skills de estudo com IA: validação de estudo com professor socrático e notas padronizadas para o Obsidian.",
+      "description": "Skills de estudo com IA: validação de estudo com professor socrático, notas padronizadas para o Obsidian e questionário socrático sobre as suas notas.",
       "category": "productivity",
       "keywords": [
         "study",

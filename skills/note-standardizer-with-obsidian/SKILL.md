@@ -79,7 +79,7 @@ O usuário quer que as notas do vault fiquem ligadas, mesmo quando o resumo não
 
 Sem vault resolvido, não há relações: a nota sai sem a seção.
 
-Com vault resolvido, liste as notas `.md` do vault (nomes de arquivo) e, se preciso, leia títulos, tags e cabeçalhos. Duas notas se relacionam quando há ligação **concreta**: o texto de uma cita ou depende do assunto da outra, ou uma é parte da outra (*Volumes* é parte de *Docker*). Ser "do mesmo tema geral" não basta. Na dúvida, não relacione.
+Com vault resolvido, liste as notas `.md` do vault (nomes de arquivo) e, se preciso, leia títulos, tags e cabeçalhos. Ignore notas com a tag `learn-about`: são diários de progresso da skill `learn-about`, não conteúdo de estudo. Duas notas se relacionam quando há ligação **concreta**: o texto de uma cita ou depende do assunto da outra, ou uma é parte da outra (*Volumes* é parte de *Docker*). Ser "do mesmo tema geral" não basta. Na dúvida, não relacione.
 
 - **Nota nova:** ponha em `## Relações`, no fim, um link puro para cada nota existente relacionada (`- [[Docker]]`), sem frase explicativa escrita por você, para não inventar texto. Se não achou nenhuma relação, omita a seção (sem seção vazia).
 - **Notas existentes:** para cada nota relacionada, acrescente uma linha com o link para a nova em `## Relações` dela, criando a seção no fim se não existir. Só acrescente essa linha: não altere mais nada na nota antiga e não duplique um link que já está lá.
