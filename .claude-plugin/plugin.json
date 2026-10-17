@@ -1,0 +1,21 @@
+{
+  "name": "study-workflow-skills",
+  "version": "0.1.0",
+  "description": "Skills de estudo com IA: valide o que você estudou com um professor que guia em vez de dar a resposta, sempre citando a fonte.",
+  "author": {
+    "name": "João Pereira",
+    "url": "https://github.com/imJpereira"
+  },
+  "homepage": "https://github.com/imJpereira/study-workflow-skills",
+  "repository": "https://github.com/imJpereira/study-workflow-skills",
+  "license": "MIT",
+  "keywords": [
+    "study",
+    "learning",
+    "skills",
+    "teacher"
+  ],
+  "skills": [
+    "./skills/teacher-feedback"
+  ]
+}

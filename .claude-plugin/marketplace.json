@@ -1,0 +1,22 @@
+{
+  "name": "study-workflow",
+  "owner": {
+    "name": "João Pereira",
+    "url": "https://github.com/imJpereira"
+  },
+  "description": "Skills de estudo com IA.",
+  "plugins": [
+    {
+      "name": "study-workflow-skills",
+      "source": "./",
+      "description": "Skills de estudo com IA: valide o que você estudou com um professor que guia em vez de dar a resposta, sempre citando a fonte.",
+      "category": "productivity",
+      "keywords": [
+        "study",
+        "learning",
+        "skills",
+        "teacher"
+      ]
+    }
+  ]
+}
