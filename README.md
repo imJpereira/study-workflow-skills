@@ -28,7 +28,7 @@ Uma forma de usá-las em sequência (sugestão, nada é obrigatório):
    * Saída: afirmações classificadas (corretas, incorretas, imprecisas ou não verificadas), perguntas e pistas para você chegar à resposta, e a fonte de cada verificação. A resposta direta só vem se você pedir.
 2. **note-standardizer-with-obsidian**
    * Entrada: um resumo ou anotação (texto colado ou arquivo anexado).
-   * Saída: nota markdown com frontmatter (`title`, `tags`, `created`) e seções derivadas do que você escreveu, sem template fixo e sem seção vazia. Mantém as suas palavras e o seu tom, sem acrescentar fatos. Uma seção `Relações` liga a notas que já existem no seu vault. Não usa MCP: lê e grava direto na pasta do vault. Na primeira vez pergunta qual é o vault, em qual pasta gravar e se deve gravar sempre direto; as respostas ficam salvas. Nunca sobrescreve uma nota existente.
+   * Saída: nota markdown com frontmatter (`title`, `tags`, `created`) e seções derivadas do que você escreveu, sem template fixo e sem seção vazia. Mantém as suas palavras e o seu tom, sem acrescentar fatos. Uma seção `Relações` liga só a notas que já existem no seu vault, sem sugestões; a nota antiga também ganha o link de volta (só uma linha em `Relações`). Não usa MCP: lê e grava direto na pasta do vault. Na primeira vez pergunta qual é o vault, em qual pasta gravar e se deve gravar sempre direto; as respostas ficam salvas. Nunca sobrescreve uma nota existente.
    * Preferências: o vault, a pasta e as regras suas (tags, seções) ficam em `~/.config/study-workflow-skills/note-standardizer.md`.
 3. **learn-about**
    * Entrada: assunto + arquivo de contexto de domínio.

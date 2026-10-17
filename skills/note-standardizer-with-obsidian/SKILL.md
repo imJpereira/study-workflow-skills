@@ -1,6 +1,6 @@
 ---
 name: note-standardizer-with-obsidian
-description: Transforma o resumo ou as anotações do usuário em uma nota markdown organizada para o Obsidian (frontmatter, seções definidas pelo conteúdo, [[wikilinks]] e uma seção de relações com outras notas do vault), mantendo as palavras e o tom do próprio usuário, e grava a nota direto na pasta do vault. Use sempre que o usuário colar ou anexar (docx, pdf, md, txt) um resumo, estudo, impressões de um livro, anotações de aula ou qualquer texto e pedir para padronizar, organizar, formatar, estruturar, "transformar em nota", "colocar no Obsidian" ou "deixar mais articulado" — mesmo sem dizer "Obsidian" ou o nome da skill.
+description: Transforma o resumo ou as anotações do usuário em uma nota markdown organizada para o Obsidian (frontmatter, seções definidas pelo conteúdo, [[wikilinks]] e relações reais com outras notas do vault, nos dois sentidos), mantendo as palavras e o tom do próprio usuário, e grava a nota direto na pasta do vault. Use sempre que o usuário colar ou anexar (docx, pdf, md, txt) um resumo, estudo, impressões de um livro, anotações de aula ou qualquer texto e pedir para padronizar, organizar, formatar, estruturar, "transformar em nota", "colocar no Obsidian" ou "deixar mais articulado" — mesmo sem dizer "Obsidian" ou o nome da skill.
 ---
 
 # note-standardizer-with-obsidian
@@ -51,6 +51,7 @@ created: <AAAA-MM-DD de hoje>
 ```
 
 - `[[wikilinks]]` no corpo só para conceitos que o usuário citou (ex.: `[[Container]]`, `[[Imagem]]`). Nada inventado.
+- `## Relações` só existe se houver relações reais (ver Passo 3).
 - Tags curtas, derivadas do assunto.
 
 ## Passo 2 — Achar o vault
@@ -74,12 +75,18 @@ Se o usuário nega o vault sugerido, não insista: pergunte o caminho certo ou s
 
 ## Passo 3 — Relações
 
-O usuário quer que a nota seja ligada a outras, mesmo que o resumo não as mencione. Essas ligações ficam na seção `## Relações`, no fim, identificada como adição da skill, para o corpo continuar sendo só o que o usuário disse.
+O usuário quer que as notas do vault fiquem ligadas, mesmo quando o resumo não menciona a ligação. Mas só entram relações que existem de verdade: nunca sugira tópicos que ainda não existem como nota. Uma lista de "talvez" polui o vault, e uma nota só ganha o link quando a outra existir.
 
-- **Com vault resolvido:** liste as notas `.md` do vault (nomes de arquivo) e, se preciso, procure por título, tags e cabeçalhos relacionados ao assunto. Ligue as que existem com `[[wikilinks]]` usando o nome do arquivo sem extensão. Notas que fariam sentido mas ainda não existem entram em uma lista à parte, como sugestão.
-- **Sem vault:** sugira `[[tópicos]]` pela sua própria avaliação e avise que não sabe o que existe no vault dele.
+Sem vault resolvido, não há relações: a nota sai sem a seção.
 
-Se as preferências do usuário dizem para omitir a seção, omita.
+Com vault resolvido, liste as notas `.md` do vault (nomes de arquivo) e, se preciso, leia títulos, tags e cabeçalhos. Duas notas se relacionam quando há ligação **concreta**: o texto de uma cita ou depende do assunto da outra, ou uma é parte da outra (*Volumes* é parte de *Docker*). Ser "do mesmo tema geral" não basta. Na dúvida, não relacione.
+
+- **Nota nova:** ponha em `## Relações`, no fim, um link puro para cada nota existente relacionada (`- [[Docker]]`), sem frase explicativa escrita por você, para não inventar texto. Se não achou nenhuma relação, omita a seção (sem seção vazia).
+- **Notas existentes:** para cada nota relacionada, acrescente uma linha com o link para a nova em `## Relações` dela, criando a seção no fim se não existir. Só acrescente essa linha: não altere mais nada na nota antiga e não duplique um link que já está lá.
+
+Exemplo: o usuário cria *Volumes* e já existe *Docker*. *Volumes* ganha `- [[Docker]]` em Relações, e *Docker* ganha `- [[Volumes]]`. Se *Volumes* já tivesse sido criado antes de qualquer outra nota, não haveria Relações nele; quando *Docker* chegar, *Docker* liga em *Volumes* e *Volumes* ganha o link de volta.
+
+Se as preferências do usuário dizem para omitir relações, omita.
 
 ## Passo 4 — Entregar e gravar
 
@@ -87,9 +94,11 @@ Mostre sempre a nota completa em markdown no chat, seguida das linhas de aviso (
 
 Depois grave no vault, conforme a preferência:
 
-- **"Gravar direto: sim":** grave em `<vault>/<pasta padrão>/<Título>.md` e diga o caminho final.
-- **Confirmar a cada nota:** pergunte "Gravar em `<caminho>`?" e só grave com um sim.
+- **"Gravar direto: sim":** grave em `<vault>/<pasta padrão>/<Título>.md`, aplique as linhas de Relações nas notas existentes (Passo 3) e diga o caminho final. Liste no fim exatamente o que mudou nas notas antigas (nota e linha acrescentada).
+- **Confirmar a cada nota:** pergunte "Gravar em `<caminho>`?" mostrando também as edições planejadas nas notas antigas (nota e linha), e só aplique com um sim.
 - **Sem vault resolvido:** só devolva o texto e diga que não gravou nada.
+
+Se a nota nova não for gravada, nenhuma nota antiga é alterada.
 
 **Nunca sobrescreva.** Se já existir nota com esse nome, pare e pergunte se prefere outro título ou acrescentar ao conteúdo existente; mesmo com "gravar direto: sim". Crie a pasta de destino se faltar. Nome de arquivo: o título, trocando caracteres inválidos em nomes de arquivo (`/ \ : * ? " < > |`) por espaço ou hífen.
 
