@@ -1,6 +1,6 @@
 ---
 name: note-standardizer-with-obsidian
-description: Transforma o resumo ou as anotações do usuário em uma nota markdown organizada para o Obsidian (frontmatter, seções definidas pelo conteúdo, [[wikilinks]] e uma seção de relações com outras notas), mantendo as palavras e o tom do próprio usuário. Use sempre que o usuário colar ou anexar (docx, pdf, md, txt) um resumo, estudo, impressões de um livro, anotações de aula ou qualquer texto e pedir para padronizar, organizar, formatar, estruturar, "transformar em nota", "colocar no Obsidian" ou "deixar mais articulado" — mesmo sem dizer "Obsidian" ou o nome da skill. Se houver um MCP do Obsidian conectado, busca relações no vault e oferece gravar a nota lá.
+description: Transforma o resumo ou as anotações do usuário em uma nota markdown organizada para o Obsidian (frontmatter, seções definidas pelo conteúdo, [[wikilinks]] e uma seção de relações com outras notas do vault), mantendo as palavras e o tom do próprio usuário, e grava a nota direto na pasta do vault. Use sempre que o usuário colar ou anexar (docx, pdf, md, txt) um resumo, estudo, impressões de um livro, anotações de aula ou qualquer texto e pedir para padronizar, organizar, formatar, estruturar, "transformar em nota", "colocar no Obsidian" ou "deixar mais articulado" — mesmo sem dizer "Obsidian" ou o nome da skill.
 ---
 
 # note-standardizer-with-obsidian
@@ -9,13 +9,15 @@ Você transforma o texto bruto do usuário em uma nota de Obsidian bem organizad
 
 Escreva na mesma língua do texto do usuário.
 
+Um vault do Obsidian é só uma pasta de arquivos `.md` (com uma subpasta `.obsidian/`). Não existe MCP do Obsidian: você lê e grava os arquivos do vault diretamente.
+
 ## Entrada
 
 Texto colado no chat ou arquivo anexado (docx, pdf, md, txt).
 
 ## Passo 0 — Ler as preferências
 
-Se existir `~/.config/study-workflow-skills/note-standardizer.md`, leia antes de tudo. É uma lista de regras curtas em texto livre que o usuário foi salvando (ex.: "tags em minúsculas e sem acento", "pasta padrão `Estudos/`", "sem seção de Relações"). Ordem de prioridade: o que o usuário pedir agora > preferências salvas > padrões desta skill. Ao final, diga em uma linha quais preferências aplicou (ex.: "Apliquei: tags minúsculas, pasta Estudos/"), para o usuário poder ajustar. Se o arquivo não existe, siga com os padrões e não crie nada.
+Se existir `~/.config/study-workflow-skills/note-standardizer.md`, leia antes de tudo. É uma lista de regras curtas em texto livre que guarda as escolhas do usuário (ex.: "tags em minúsculas e sem acento", "sem seção de Relações", o vault escolhido, se grava automático). Ordem de prioridade: o que o usuário pedir agora > preferências salvas > padrões desta skill. Ao final, diga em uma linha quais preferências aplicou (ex.: "Apliquei: tags minúsculas, vault X"), para o usuário poder ajustar. Se o arquivo não existe, siga com os padrões.
 
 ## Passo 1 — Montar a nota
 
@@ -45,32 +47,57 @@ created: <AAAA-MM-DD de hoje>
 ...
 
 ## Relações
-<ver Passo 2>
+<ver Passo 3>
 ```
 
 - `[[wikilinks]]` no corpo só para conceitos que o usuário citou (ex.: `[[Container]]`, `[[Imagem]]`). Nada inventado.
 - Tags curtas, derivadas do assunto.
 
-## Passo 2 — Relações
+## Passo 2 — Achar o vault
+
+Você precisa do vault para buscar relações e gravar. Resolva assim:
+
+1. **Preferências já têm um vault** e a pasta ainda existe com `.obsidian/` dentro: use-o, sem perguntar.
+2. **Caso contrário, descubra os candidatos.** Primeiro leia o registro de vaults do próprio Obsidian (Linux: `~/.config/obsidian/obsidian.json`; macOS: `~/Library/Application Support/obsidian/obsidian.json`; Windows: `%APPDATA%\obsidian\obsidian.json`), que lista os caminhos em `vaults`. Se não existir, procure pastas `.obsidian` (profundidade limitada, ex. 4, a partir de `~`, `~/Documents` e pastas de sincronização comuns; ignore pastas ocultas e `node_modules`). O vault é a pasta pai de `.obsidian`.
+3. **Primeira vez: pergunte, nesta ordem, e espere a resposta:**
+   - **Vault:** "É este o vault? `<caminho>`" (se houver vários, liste e peça para escolher; se não achar nenhum, diga e peça o caminho, ou siga só com o texto no chat).
+   - **Pasta:** "Em qual pasta do vault as notas devem ir? (padrão: raiz)".
+   - **Gravação:** "Quer que eu grave sempre direto no vault, ou prefere confirmar a cada nota?"
+4. **Salve as respostas** em `~/.config/study-workflow-skills/note-standardizer.md` (crie a pasta e o arquivo se faltar), como linhas curtas, por exemplo:
+   - `Vault do Obsidian: /caminho/do/vault`
+   - `Pasta padrão das notas: Estudos/`
+   - `Gravar direto no vault: sim` (ou `não, confirmar a cada nota`)
+
+   Essas três respostas são pedidas justamente para guardar, então não precisa de um segundo "salvar?"; apenas avise em uma linha que ficaram salvas e que o usuário pode editar o arquivo ou pedir para mudar.
+
+Se o usuário nega o vault sugerido, não insista: pergunte o caminho certo ou siga só com o texto no chat.
+
+## Passo 3 — Relações
 
 O usuário quer que a nota seja ligada a outras, mesmo que o resumo não as mencione. Essas ligações ficam na seção `## Relações`, no fim, identificada como adição da skill, para o corpo continuar sendo só o que o usuário disse.
 
-- **Com MCP do Obsidian disponível:** busque no vault notas relacionadas ao assunto e ligue as que existem com `[[wikilinks]]`. Notas que fariam sentido mas ainda não existem entram numa lista à parte, como sugestão.
-- **Sem MCP:** sugira `[[tópicos]]` pela sua própria avaliação e avise que não sabe o que existe no vault dele.
+- **Com vault resolvido:** liste as notas `.md` do vault (nomes de arquivo) e, se preciso, procure por título, tags e cabeçalhos relacionados ao assunto. Ligue as que existem com `[[wikilinks]]` usando o nome do arquivo sem extensão. Notas que fariam sentido mas ainda não existem entram em uma lista à parte, como sugestão.
+- **Sem vault:** sugira `[[tópicos]]` pela sua própria avaliação e avise que não sabe o que existe no vault dele.
 
 Se as preferências do usuário dizem para omitir a seção, omita.
 
-## Passo 3 — Entregar e perguntar sobre gravar
+## Passo 4 — Entregar e gravar
 
 Mostre sempre a nota completa em markdown no chat, seguida das linhas de aviso (lacunas, suposições, preferências aplicadas).
 
-**Nunca grave sem perguntar.** Procure nas ferramentas disponíveis alguma que leia, escreva ou busque notas de um vault do Obsidian (não presuma nome de MCP). Se encontrar, pergunte: "Quer gravar no Obsidian? Em qual pasta?". Só grave com um sim, em `<Título>.md` na pasta indicada (ou na raiz do vault se ele não indicar). Nunca sobrescreva: se já existir nota com esse título, pare e pergunte se prefere outro título ou acrescentar ao conteúdo existente. Se não houver MCP, só devolva o texto e diga que não gravou nada.
+Depois grave no vault, conforme a preferência:
 
-## Passo 4 — Preferências
+- **"Gravar direto: sim":** grave em `<vault>/<pasta padrão>/<Título>.md` e diga o caminho final.
+- **Confirmar a cada nota:** pergunte "Gravar em `<caminho>`?" e só grave com um sim.
+- **Sem vault resolvido:** só devolva o texto e diga que não gravou nada.
 
-O usuário pode guardar preferências para as próximas notas, em `~/.config/study-workflow-skills/note-standardizer.md` (arquivo global, markdown simples, uma regra curta por linha, editável à mão). Grave nele só de duas formas, nunca em silêncio:
+**Nunca sobrescreva.** Se já existir nota com esse nome, pare e pergunte se prefere outro título ou acrescentar ao conteúdo existente; mesmo com "gravar direto: sim". Crie a pasta de destino se faltar. Nome de arquivo: o título, trocando caracteres inválidos em nomes de arquivo (`/ \ : * ? " < > |`) por espaço ou hífen.
 
-- o usuário pede ("lembra que eu prefiro X"): grave;
+## Passo 5 — Preferências
+
+O usuário pode guardar outras preferências para as próximas notas no mesmo arquivo (`~/.config/study-workflow-skills/note-standardizer.md`, global, markdown simples, uma regra curta por linha, editável à mão). Além das respostas do Passo 2, grave só de duas formas, nunca em silêncio:
+
+- o usuário pede ("lembra que eu prefiro X", "agora quero confirmar a cada nota"): grave;
 - o usuário corrige o resultado ("tira essa seção", "tag em inglês"): pergunte "Salvar isso como preferência?" e grave só com um sim.
 
-Crie o arquivo (e a pasta) somente depois de um sim. Acrescente a regra sem apagar as existentes; se uma nova contradiz uma antiga, atualize a antiga.
+Acrescente a regra sem apagar as existentes; se uma nova contradiz uma antiga, atualize a antiga.
