@@ -7,7 +7,7 @@ Skills de estudo com IA. Cada skill funciona sozinha; juntas, formam um ciclo op
 | Skill | O que faz | Status |
 | -- | -- | -- |
 | `teacher-feedback` | Revisa o seu estudo como um professor: guia com perguntas em vez de dar a resposta e sempre cita a fonte | Disponível |
-| `note-standardizer` | Converte um estudo em uma nota markdown padronizada (vault do Obsidian, com `[[links]]`) | Planejada |
+| `note-standardizer-with-obsidian` | Converte o seu resumo em uma nota markdown para o Obsidian: seções definidas pelo conteúdo, nas suas palavras, com `[[links]]` e relações com outras notas | Disponível |
 | `learn-about` | Faz perguntas socráticas sobre um assunto e atualiza o seu nível por sub-tópico, com revisões espaçadas | Planejada |
 
 As skills são independentes: não dependem umas das outras e cada uma pode ser usada isoladamente.
@@ -18,7 +18,7 @@ Uma forma de usá-las em sequência (sugestão, nada é obrigatório):
 
 1. Estude um assunto (por exemplo, Docker) e escreva um resumo com as suas palavras.
 2. `teacher-feedback`: valida o resumo até estar correto.
-3. `note-standardizer`: registra o estudo validado em uma nota padronizada.
+3. `note-standardizer-with-obsidian`: registra o estudo validado em uma nota padronizada.
 4. `learn-about`: testa o que você aprendeu e agenda a próxima revisão. Se aparecer uma lacuna, volte ao passo 1.
 
 ## Entradas e saídas
@@ -26,9 +26,10 @@ Uma forma de usá-las em sequência (sugestão, nada é obrigatório):
 1. **teacher-feedback**
    * Entrada: um resumo (texto colado ou arquivo anexado), opcionalmente com as fontes que você usou para estudar.
    * Saída: afirmações classificadas (corretas, incorretas, imprecisas ou não verificadas), perguntas e pistas para você chegar à resposta, e a fonte de cada verificação. A resposta direta só vem se você pedir.
-2. **note-standardizer**
-   * Entrada: um estudo.
-   * Saída: nota markdown com as seções *O que é*, *Quando usar*, *Por que existe*, *Quando não usar*, *Exemplos*, *Tópicos relacionados*.
+2. **note-standardizer-with-obsidian**
+   * Entrada: um resumo ou anotação (texto colado ou arquivo anexado).
+   * Saída: nota markdown com frontmatter (`title`, `tags`, `created`) e seções derivadas do que você escreveu, sem template fixo e sem seção vazia. Mantém as suas palavras e o seu tom, sem acrescentar fatos. Uma seção `Relações` sugere ligações com outras notas (com MCP do Obsidian, busca no vault). Nunca grava sem perguntar; sem MCP, só devolve o texto.
+   * Preferências: se você quiser, a skill guarda regras suas (tags, pasta, seções) em `~/.config/study-workflow-skills/note-standardizer.md`, só com a sua confirmação.
 3. **learn-about**
    * Entrada: assunto + arquivo de contexto de domínio.
    * Saída: perguntas socráticas, avaliação das respostas, contexto atualizado (nível por sub-tópico) e agenda de revisão espaçada.

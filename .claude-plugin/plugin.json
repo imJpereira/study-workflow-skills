@@ -1,7 +1,7 @@
 {
   "name": "study-workflow-skills",
   "version": "0.1.0",
-  "description": "Skills de estudo com IA: valide o que você estudou com um professor que guia em vez de dar a resposta, sempre citando a fonte.",
+  "description": "Skills de estudo com IA: valide o que você estudou com um professor que guia em vez de dar a resposta, e transforme resumos em notas padronizadas para o Obsidian.",
   "author": {
     "name": "João Pereira",
     "url": "https://github.com/imJpereira"
@@ -16,6 +16,7 @@
     "teacher"
   ],
   "skills": [
-    "./skills/teacher-feedback"
+    "./skills/teacher-feedback",
+    "./skills/note-standardizer-with-obsidian"
   ]
 }
